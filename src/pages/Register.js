@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword } from "fir
 import firebaseConfig from "../backend/firebaseConfig";
 import { initializeApp } from "firebase/app";
 import { useNavigate, Link } from "react-router-dom";
+import "./signin.css";
 
 const Register = () => {
   const app = initializeApp(firebaseConfig);
@@ -13,23 +14,21 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    // Check if the user is already logged in
     const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
-            navigate('/');
+            navigate('/home');
         }
     });
 
-    // Clean up the subscription on unmount
     return () => unsubscribe();
-}, [auth, navigate]);
+  }, [auth, navigate]);
 
   const registerAccount = (e) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(userCredential); // demo
-        navigate('/');
+        console.log(userCredential);
+        navigate('/home');
       })
       .catch((error) => {
         console.log(error);
@@ -37,7 +36,7 @@ const Register = () => {
   };
 
   return (
-    <div className="sign-in-container">
+    <div className="sign-in">
       <form onSubmit={registerAccount}>
         <h1>Create Account</h1>
         <input
@@ -55,7 +54,7 @@ const Register = () => {
         <button type="submit">Sign Up</button>
       </form>
       <p>
-        Already have an account? <Link to="/login">Log in here</Link>
+        Already have an account? <br /> <Link to="/login">Log in here</Link>
       </p>
     </div>
   );

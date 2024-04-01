@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import firebaseConfig from "../backend/firebaseConfig";
 import { initializeApp } from "firebase/app";
 import { useNavigate, Link } from "react-router-dom";
+import "./signin.css";
 
 const Login = () => {
     const app = initializeApp(firebaseConfig);
@@ -15,11 +16,10 @@ const Login = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                navigate('/');
+                navigate('/home');
             }
         });
 
-        // Clean up the subscription on unmount
         return () => unsubscribe();
     }, [auth, navigate]);
 
@@ -27,8 +27,8 @@ const Login = () => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(userCredential); // demo
-                navigate('/');
+                console.log(userCredential);
+                navigate('/home');
             })
             .catch((error) => {
                 console.log(error);
@@ -36,7 +36,7 @@ const Login = () => {
     };
 
     return (
-        <div className="sign-in-container">
+        <div className="sign-in">
             <form onSubmit={login}>
                 <h1>Log In to your Account</h1>
                 <input
@@ -54,8 +54,9 @@ const Login = () => {
                 <button type="submit">Log In</button>
             </form>
             <p>
-                <Link to="/register">Don't have an account? Register here</Link>
+                Don't have an account? <br /> <Link to="/register">Register here</Link>
             </p>
+            
         </div>
     );
 };
