@@ -1,36 +1,55 @@
-import React from 'react';
-import { getAuth, signOut } from 'firebase/auth';
+import React, { useState } from 'react';
+import { getAuth, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import "./Styles/EditProfile.css";
 
 function EditProfile() {
+    const auth = getAuth();
     const navigate = useNavigate();
 
-    function logout() {
-        const auth = getAuth();
-        signOut(auth)
-            .then(() => {
-                navigate('/login');
-            })
-            .catch((error) => {
-                console.error('Error signing out: ', error);
-            });
-    }
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+
+    const handleSave = () => {
+        updateProfile(auth.currentUser, {
+            displayName: `${firstName} ${lastName}`,
+            email: email
+        }).then(() => {
+            navigate('/home'); // Navigate to the home page after profile update
+        }).catch((error) => {
+            console.error('Error updating profile: ', error);
+        });
+    };
 
     return (
-        <div className="edit-profile">
+        <div className="edit-profile-container">
             <h1>Edit Profile</h1>
-            <form>
-                <div className="form-group">
-                    <label htmlFor="username">Username:</label>
-                    <input type="text" id="username" name="username" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" />
-                </div>
-                <button type="submit">Save Changes</button>
-            </form>
-            <button onClick={logout}>Log Out</button>
+            <div className="input-container">
+                <label>First Name:</label>
+                <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                />
+            </div>
+            <div className="input-container">
+                <label>Last Name:</label>
+                <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                />
+            </div>
+            <div className="input-container">
+                <label>Email:</label>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+            </div>
+            <button onClick={handleSave}>Save Changes</button>
         </div>
     );
 }

@@ -1,14 +1,14 @@
-body {
+.settings-page body {
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f8ff; /* Light blue background */
+    background-color: #f0f8ff;
 }
 
-.settings-container {
+.settings-page .settings-container {
     max-width: 600px;
     padding: 20px;
     background-color: #f9f9f9;
@@ -18,13 +18,13 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.settings h1 {
+.settings-page .settings h1 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
 }
 
-.settings button {
+.settings-page .settings button {
     display: block;
     width: 100%;
     padding: 10px 15px;
@@ -38,6 +38,6 @@ body {
     transition: background-color 0.3s;
 }
 
-.settings button:hover {
+.settings-page .settings button:hover {
     background-color: #0056b3;
 }

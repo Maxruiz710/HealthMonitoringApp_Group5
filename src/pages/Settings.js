@@ -18,15 +18,17 @@ function Settings() {
     }
 
     return (
-    <div className="settings-container">
-        <div className="settings">
-         <h1>Settings Page</h1>
-            <button onClick={() => alert("Functionality to be implemented!")}>Button 1</button>
-            <button onClick={() => alert("Functionality to be implemented!")}>Button 2</button>
-            <button onClick={logout}>Log Out</button>
-            <button onClick={() => navigate('/home')}>Back</button>
+        <div className="settings-page">
+            <div className="settings-container">
+                <div className="settings">
+                    <h1>Settings Page</h1>
+                    <button onClick={() => alert("Functionality to be implemented!")}>Button 1</button>
+                    <button onClick={() => alert("Functionality to be implemented!")}>Button 2</button>
+                    <button onClick={logout}>Log Out</button>
+                    <button onClick={() => navigate('/home')}>Back</button>
+                </div>
+            </div>
         </div>
-    </div>
 
     );
 }

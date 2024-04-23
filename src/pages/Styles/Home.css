@@ -1,17 +1,19 @@
-.dashboard-container {
+.home-page .dashboard-container {
+  /* Styles for the dashboard container */
   text-align: center;
   margin-top: 50px;
-
 }
 
-.button-container {
+.home-page .button-container {
+  /* Styles for the button container */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin-top: 20px;
 }
 
-.button-container button {
+.home-page .button-container button {
+  /* Styles for buttons */
   font-family: lucida console, monospace;
   width: 100%;
   padding: 15px;
@@ -23,6 +25,6 @@
   transition: background-color 0.3s ease;
 }
 
-.button-container button:hover {
+.home-page .button-container button:hover {
   background-color: #0056b3;
 }
