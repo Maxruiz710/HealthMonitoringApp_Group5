@@ -20,8 +20,8 @@ import "./Styles/signin.css";
 //       }
 //     });
 
-    return () => unsubscribe();
-  }, [auth, navigate]);
+  //   return () => unsubscribe();
+  // }, [auth, navigate]);
 
 return (
         <div className="trends-analysis">
