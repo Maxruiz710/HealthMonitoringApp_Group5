@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Settings from './pages/Settings';
 import BackendDemo from './pages/BackendDemo';
+import EditProfile from './pages/EditProfile';
 import firebaseConfig from './backend/firebaseConfig';
 import { initializeApp } from 'firebase/app';
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/" element={<BackendDemo />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword } from "fir
 import firebaseConfig from "../backend/firebaseConfig";
 import { initializeApp } from "firebase/app";
 import { useNavigate, Link } from "react-router-dom";
-import "./signin.css";
+import "./Styles/signin.css";
 
 const Register = () => {
   const app = initializeApp(firebaseConfig);

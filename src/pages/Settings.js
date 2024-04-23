@@ -1,22 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom';
-//import "./settings.css";
+import React from 'react';
+import { getAuth, signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import "./Styles/Settings.css";
 
-function logout() {
-    sessionStorage.clear();
+function Settings() {
+    const navigate = useNavigate();
 
-  }
+    function logout() {
+        const auth = getAuth();
+        signOut(auth)
+            .then(() => {
+                navigate('/login');
+            })
+            .catch((error) => {
+                console.error('Error signing out: ', error);
+            });
+    }
 
-function settings({ onLogout }) {
     return (
+    <div className="settings-container">
         <div className="settings">
-            <h1>Settings Page</h1>
+         <h1>Settings Page</h1>
             <button onClick={() => alert("Functionality to be implemented!")}>Button 1</button>
             <button onClick={() => alert("Functionality to be implemented!")}>Button 2</button>
-            <button onClick={() => logout()}>Log Out</button>
+            <button onClick={logout}>Log Out</button>
+            <button onClick={() => navigate('/home')}>Back</button>
         </div>
+    </div>
+
     );
 }
 
-export default settings;
+export default Settings;

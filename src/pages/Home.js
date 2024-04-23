@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import "./Home.css";
+import "./Styles/Home.css";
 
 function Home() {
   const auth = getAuth();
@@ -25,7 +25,7 @@ function Home() {
     <div className="dashboard-container">
       <h1>Welcome to Your Dashboard, {userName ? userName : 'User'}!</h1>
       <div className="button-container">
-        <button>Edit Profile</button>
+       <button onClick={() => navigate('/editprofile')}>Edit Profile</button>
         <button>Enter Data</button>
         <button>Trend Analysis</button>
         <button>Change Data</button>
