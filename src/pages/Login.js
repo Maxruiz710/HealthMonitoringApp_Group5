@@ -37,7 +37,7 @@ const Login = () => {
 
     return (
         <div className="sign-in">
-            <form onSubmit={login}>
+            <form onSubmit={login} id= "login-form">
                 <h1>Log In to your Account</h1>
                 <input
                     type="email"
