@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 import { useNavigate, Link } from "react-router-dom";
 import "./Styles/signin.css";
 
-// function Home() {
+function ChangeData() {
 //   const auth = getAuth();
 //   const navigate = useNavigate();
 //   const [userName, setUserName] = useState('');
