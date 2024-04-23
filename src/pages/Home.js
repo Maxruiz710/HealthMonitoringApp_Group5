@@ -29,7 +29,7 @@ function Home() {
         <button>Enter Data</button>
         <button>Trend Analysis</button>
         <button>Change Data</button>
-        <button>Settings</button>
+        <button onClick={() => navigate('/Settings')}>Settings</button>
         <button>Set Goals</button>
       </div>
     </div>
