@@ -29,7 +29,7 @@ function App() {
         <Route path="/enterdata" element={<EnterData />} />
         <Route path="/changedata" element={<ChangeData />} />
         <Route path="/setgoals" element={<SetGoals />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<BackendDemo />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
