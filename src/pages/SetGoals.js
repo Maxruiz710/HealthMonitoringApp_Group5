@@ -1,34 +1,58 @@
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import React, { useState, useEffect } from "react";
-import firebaseConfig from "../backend/firebaseConfig";
-import { initializeApp } from "firebase/app";
-import { useNavigate, Link } from "react-router-dom";
-import "./Styles/signin.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import "./Styles/SetGoals.css";
 
-function SetGoals() {
-//   const auth = getAuth();
-//   const navigate = useNavigate();
-//   const [userName, setUserName] = useState('');
+const SetGoalsPage = () => {
+  const [steps, setSteps] = useState('');
+  const [caloriesToBurn, setCaloriesToBurn] = useState('');
+  const [goalList, setGoalList] = useState([]);
+  const navigate = useNavigate();
 
-//   useEffect(() => {
-//     const unsubscribe = onAuthStateChanged(auth, (user) => {
-//       if (user) {
-//         const userName = user.displayName;
-//         setUserName(userName);
-//       } else {
-//         navigate('/login');
-//       }
-//     });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newGoal = { steps, caloriesToBurn };
+    setGoalList([...goalList, newGoal]);
+    setSteps('');
+    setCaloriesToBurn('');
+  };
 
-  //   return () => unsubscribe();
-  // }, [auth, navigate]);
-
-return (
-        <div className="set-goals">
-
+  return (
+    <div>
+      <h2>Set Goals</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="stepsInput">Steps:</label>
+          <input
+            type="number"
+            id="stepsInput"
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
+            required
+          />
         </div>
-    );
+        <div>
+          <label htmlFor="caloriesToBurnInput">Calories to Burn:</label>
+          <input
+            type="number"
+            id="caloriesToBurnInput"
+            value={caloriesToBurn}
+            onChange={(e) => setCaloriesToBurn(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      <div>
+        <h3>Goals:</h3>
+        <ul>
+          {goalList.map((goal, index) => (
+            <li key={index}>{`Steps: ${goal.steps}, Calories to Burn: ${goal.caloriesToBurn}`}</li>
+          ))}
+        </ul>
+      </div>
+      <button onClick={() => navigate('/home')}>Back</button>
+    </div>
+  );
 };
 
-
-export default SetGoals;
+export default SetGoalsPage;
