@@ -1,6 +1,5 @@
-.settings-page body {
-    margin: 0 auto;
-    max-width: 600px;
+.setgoals-page body {
+    margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -10,7 +9,7 @@
     background-color: #f0f8ff;
 }
 
-.settings-page .settings-container {
+.setgoals-page .setgoals-container {
     max-width: 600px;
     margin-top: 10%;
     margin-left: auto;
@@ -27,16 +26,17 @@
     align-items: center;
 }
 
-.settings-page .settings h1 {
+.setgoals-page .setgoals h1 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
 }
 
-.settings-page .settings button {
+.setgoals-page .setgoals button {
     display: block;
     width: 100%;
     padding: 10px 15px;
+    margin-top: 10px;
     margin-bottom: 10px;
     font-size: 16px;
     color: #fff;
@@ -47,6 +47,7 @@
     transition: background-color 0.3s;
 }
 
-.settings-page .settings button:hover {
+.setgoals-page .setgoals button:hover {
     background-color: #0056b3;
 }
+

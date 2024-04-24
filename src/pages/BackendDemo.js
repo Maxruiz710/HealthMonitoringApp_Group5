@@ -87,15 +87,9 @@ function BackendDemo() {
             });
     }
 
-    const containerStyle = {
-        backgroundColor: 'lightblue', // Set background color to blue
-        padding: '20px', // Add padding for better appearance
-        color: 'black', // Set text color to white for better contrast
-    };
-
 
     return (
-        <div style={containerStyle}>
+        <div>
             <h1>Backend Demo</h1>
             <p><b>Firebase Auth UID: </b> {firebaseUID}</p>
             <p><b>FitBit UID: </b> {fitbitUID}</p>

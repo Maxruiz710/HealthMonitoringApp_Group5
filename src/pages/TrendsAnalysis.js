@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 import { useNavigate, Link } from "react-router-dom";
 import "./Styles/signin.css";
 
-function TrendsAnalysis() {
+function TrendAnalysis() {
 //   const auth = getAuth();
 //   const navigate = useNavigate();
 //   const [userName, setUserName] = useState('');
@@ -31,4 +31,4 @@ return (
 };
 
 
-export default TrendsAnalysis;
+export default TrendAnalysis;
