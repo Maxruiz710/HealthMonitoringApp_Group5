@@ -50,6 +50,7 @@ function EditProfile() {
                 />
             </div>
             <button onClick={handleSave}>Save Changes</button>
+            <button onClick={() => navigate('/home')}>Back</button>
         </div>
     );
 }
