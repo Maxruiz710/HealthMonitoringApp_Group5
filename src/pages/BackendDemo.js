@@ -51,6 +51,10 @@ function BackendDemo() {
                             // set doc ID with Firebase UID to getProfile
                             await addData(user.uid, await getProfile());
                             await addData(user.uid, await getHeartRateTimeSeries('2024-02-02', '1d'));
+
+                            console.log('--------------------------------------')
+                            console.log(await getHeartRateTimeSeries('2024-02-02', '1d'))
+                            console.log('--------------------------------------')
     
                             getDataByDocID(user.uid).then((data) => {
                                 console.log('Data by UID:', data);
