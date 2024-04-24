@@ -28,7 +28,7 @@ function Home() {
       <div className="button-container">
         <button onClick={() => navigate('/editprofile')}>Edit Profile</button>
         <button>Enter Data</button>
-        <button>Trend Analysis</button>
+        <button onClick={() => navigate('/trendanalysis')}>Trend Analysis</button>
         <button>Change Data</button>
         <button onClick={() => navigate('/Settings')}>Settings</button>
         <button onClick={() => navigate('/SetGoals')}>Set Goals</button>
