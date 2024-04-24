@@ -2,7 +2,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Styles/signin.css";
+import "./Styles/Settings.css";
 
 function EnterData() {
   const auth = getAuth();
@@ -93,6 +93,7 @@ function EnterData() {
         />
       </div>
       <button onClick={handleSave}>Save Data</button>
+      <button onClick={() => navigate('/home')}>Back</button>
     </div>
   );
 }
