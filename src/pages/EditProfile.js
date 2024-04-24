@@ -10,6 +10,8 @@ function EditProfile() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
+    
+
     useEffect(() => {
         // Initialize state with current user's information
         if (auth.currentUser) {

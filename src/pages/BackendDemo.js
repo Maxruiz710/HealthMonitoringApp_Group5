@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import dbHandler from '../backend/dbHandler';
 import FitbitDataComponent from '../fitbit/fitbitDataComponent';
 import { useFitbitAuth } from '../fitbit/fitbitAuth';
+import Chart from 'chart.js/auto';
+import { useNavigate } from 'react-router-dom';
 
 function BackendDemo() {
     const [fitbitUID, setFitbitUID] = useState("");
@@ -11,9 +13,10 @@ function BackendDemo() {
     const [allData, setAllData] = useState("");
     const [UIDData, setUIDData] = useState("");
     const [userEmail, setUserEmail] = useState("");
-
     const [arg1, setArg1] = useState('');
     const [arg2, setArg2] = useState('');
+    const [durationsInHours, setDurationsInHours] = useState([]);
+    const [temperature, setTemperature] = useState([]);
 
     // instance of dbHandler for the collections "users"
     const { getAllData, getDataByDocID, addData } = dbHandler({ collectionName: "users/" });
@@ -25,7 +28,7 @@ function BackendDemo() {
         // Check if accessToken is available and fetch user data only if it's available
         if (accessToken) {
             const fetchData = async () => {
-                const { getProfile, getUID, getHeartRateTimeSeries } = FitbitDataComponent({ accessToken });
+                const { getProfile, getUID, getSleepLogbyDateRange, getTemp } = FitbitDataComponent({ accessToken });
     
                 try {
                     const auth = getAuth();
@@ -50,11 +53,20 @@ function BackendDemo() {
                             
                             // set doc ID with Firebase UID to getProfile
                             await addData(user.uid, await getProfile());
-                            await addData(user.uid, await getHeartRateTimeSeries('2024-02-02', '1d'));
 
-                            console.log('--------------------------------------')
-                            console.log(await getHeartRateTimeSeries('2024-02-02', '1d'))
-                            console.log('--------------------------------------')
+                            const Temp = await getTemp('2024-04-04', '2024-04-20');
+                            const temperature = Temp.tempCore.map(entry => entry.value);
+                            console.log(Temp)
+                            setTemperature(temperature);
+
+                            // Fetch sleep log data
+                            const sleeplog = await getSleepLogbyDateRange('2024-04-04', '2024-04-20');
+                            const durations = sleeplog.sleep.map(entry => entry.duration);
+                            const durationsInHours = durations.map(duration => (duration / 3600000).toFixed(2));
+                            setDurationsInHours(durationsInHours);
+
+                            // Fetch temperature values
+                            
     
                             getDataByDocID(user.uid).then((data) => {
                                 console.log('Data by UID:', data);
@@ -91,6 +103,57 @@ function BackendDemo() {
             });
     }
 
+    // Create a line chart for duration
+    useEffect(() => {
+        if (durationsInHours.length > 0) {
+            const ctx = document.getElementById('durationChart');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: durationsInHours.map((_, index) => index + 1),
+                    datasets: [{
+                        label: 'Duration (Hours)',
+                        data: durationsInHours,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }, [durationsInHours]);
+
+    // Create a line chart for temperature
+    useEffect(() => {
+        if (temperature.length > 0) {
+            const ctx = document.getElementById('temperatureChart');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: temperature.map((_, index) => index + 1),
+                    datasets: [{
+                        label: 'Temperature',
+                        data: temperature,
+                        borderColor: 'rgb(255, 99, 132)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }, [temperature]);
 
     return (
         <div>
@@ -99,22 +162,12 @@ function BackendDemo() {
             <p><b>FitBit UID: </b> {fitbitUID}</p>
             <p><b>User Email: </b> {userEmail}</p>
             <p><Link to="/login">Log in</Link> <Link to="/register">Register</Link></p>
-            <hr />
-            <p>Write Data to doc with FireStore UID:
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        <input type="text" placeholder="field name" value={arg1} onChange={(e) => setArg1(e.target.value)} />
-                    </label>
-                    <label>
-                        <input type="text" placeholder="field value" value={arg2} onChange={(e) => setArg2(e.target.value)} />
-                    </label>
-                    <button type="submit">Submit</button>
-                </form>
-            </p>
-            <hr />
-            <b>All data from collection: </b><pre>{JSON.stringify(allData)}</pre>
-            <hr />
-            <b>Data From FireStore UID {"(should be your data)"}: </b><pre>{JSON.stringify(UIDData)}</pre>
+            <div>
+                <canvas id="durationChart"></canvas>
+            </div>
+            <div>
+                <canvas id="temperatureChart"></canvas>
+            </div>
         </div>
     );
 }
