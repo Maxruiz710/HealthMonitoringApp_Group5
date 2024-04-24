@@ -31,4 +31,4 @@ return (
 };
 
 
-export default Home;
+export default TrendsAnalysis;
