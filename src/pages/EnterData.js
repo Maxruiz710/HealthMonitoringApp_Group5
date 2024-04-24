@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Styles/signin.css";
@@ -34,19 +34,29 @@ function EnterData() {
         collectionName = "calories-data";
       }
 
-      // Get a reference to the signed-in user's collection
-      const userCollectionRef = collection(db, "users", userUID, collectionName);
+      // Get a reference to the existing document for the signed-in user
+      const userDocRef = doc(db, "users", userUID);
 
-      // Create a new document in the signed-in user's collection
-      const docRef = await addDoc(userCollectionRef, {
-        dateTime: date,
-        value: parseFloat(dataValue) // Convert dataValue to a number if needed
-      });
+      // Get the document snapshot
+      const docSnapshot = await getDoc(userDocRef);
 
-      console.log("Document written with ID: ", docRef.id);
-      navigate('/home'); // Navigate to the home page after saving data
+      // Check if the document exists
+      if (docSnapshot.exists()) {
+        // Update the document with the new data field
+        await updateDoc(userDocRef, {
+          [collectionName]: {
+            dateTime: date,
+            value: parseFloat(dataValue) // Convert dataValue to a number if needed
+          }
+        });
+
+        console.log("Field added to existing document.");
+        navigate('/home'); // Navigate to the home page after saving data
+      } else {
+        console.error("User document does not exist.");
+      }
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error("Error adding field to document: ", error);
     }
   };
 
