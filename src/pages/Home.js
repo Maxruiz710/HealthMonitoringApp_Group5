@@ -31,7 +31,7 @@ function Home() {
         <button>Trend Analysis</button>
         <button>Change Data</button>
         <button onClick={() => navigate('/Settings')}>Settings</button>
-        <button>Set Goals</button>
+        <button onClick={() => navigate('/SetGoals')}>Set Goals</button>
       </div>
     </div>
     </div>
