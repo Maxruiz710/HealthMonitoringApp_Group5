@@ -1,7 +1,19 @@
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 import "./Styles/signin.css";
+
+const getUserUID = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user) {
+    return user.uid;
+  } else {
+    // Handle the case where the user is not authenticated or the UID is not available
+    return null;
+  }
+};
 
 function EnterData() {
   const db = getFirestore();
@@ -13,6 +25,9 @@ function EnterData() {
 
   const handleSave = async () => {
     try {
+      // Get the user's UID
+      const userUID = getUserUID();
+
       // Determine the collection based on the selected dataType
       let collectionName;
       if (dataType === "heartRate") {
@@ -22,13 +37,16 @@ function EnterData() {
       } else if (dataType === "calories") {
         collectionName = "calories-data";
       }
-      
-      // Create a new document in the determined collection
-      const docRef = await addDoc(collection(db, collectionName), {
+
+      // Get a reference to the user's collection
+      const userCollectionRef = collection(db, "users", userUID, collectionName);
+
+      // Create a new document in the user's collection
+      const docRef = await addDoc(userCollectionRef, {
         dateTime: date,
         value: parseFloat(dataValue) // Convert dataValue to a number if needed
       });
-      
+
       console.log("Document written with ID: ", docRef.id);
       navigate('/home'); // Navigate to the home page after saving data
     } catch (error) {

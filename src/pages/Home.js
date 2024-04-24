@@ -27,7 +27,7 @@ function Home() {
       <h1>Welcome to Your Dashboard, {userName ? userName : 'User'}!</h1>
       <div className="button-container">
         <button onClick={() => navigate('/editprofile')}>Edit Profile</button>
-        <button>Enter Data</button>
+        <button onClick={() => navigate('/enterdata')}>Enter Data</button>
         <button>Trend Analysis</button>
         <button>Change Data</button>
         <button onClick={() => navigate('/Settings')}>Settings</button>
