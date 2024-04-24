@@ -42,21 +42,34 @@ const FitbitDataComponent = ({ accessToken }) => {
       }
     };
   
-    const getHeartRateTimeSeries = async (date, period) => {
-      const timeSeriesEndpoint = `https://api.fitbit.com/1/user/-/activities/heart/date/${date}/${period}.json`;
-      const timeSeriesHeaders = {
+    const getSleepLogbyDateRange = async (start, end) => {
+      const SleepSeriesEndpoint = `https://api.fitbit.com/1.2/user/-/sleep/date/${start}/${end}.json`;
+      const SleepSeriesHeaders = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         }
       };
   
-      return await APIRequest(timeSeriesEndpoint, timeSeriesHeaders);
+      return await APIRequest(SleepSeriesEndpoint, SleepSeriesHeaders);
+    };
+
+
+    const getTemp = async (start, end) => {
+      const TempSeriesEndpoint = `https://api.fitbit.com/1/user/-/temp/core/date/${start}/${end}.json`;
+      const  TempSeriesHeaders = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
+      };
+  
+      return await APIRequest( TempSeriesEndpoint,  TempSeriesHeaders);
     };
   
     return {
       getProfile,
       getUID,
-      getHeartRateTimeSeries,
+      getSleepLogbyDateRange,
+      getTemp,
     };
   };
   

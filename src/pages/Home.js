@@ -30,8 +30,10 @@ function Home() {
         <button onClick={() => navigate('/enterdata')}>Enter Data</button>
         <button>Trend Analysis</button>
         <button>Change Data</button>
+        <button>Enter Data</button>
+        <button onClick={() => navigate('/trends')}>Trends</button>
         <button onClick={() => navigate('/Settings')}>Settings</button>
-        <button>Set Goals</button>
+        <button onClick={() => navigate('/SetGoals')}>Set Goals</button>
       </div>
     </div>
     </div>

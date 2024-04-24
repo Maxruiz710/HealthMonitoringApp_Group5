@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import "./Styles/EditProfile.css";
@@ -9,17 +9,31 @@ function EditProfile() {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
+
+    
+
+    useEffect(() => {
+        // Initialize state with current user's information
+        if (auth.currentUser) {
+            const names = auth.currentUser.displayName ? auth.currentUser.displayName.split(" ") : ["", ""];
+            setFirstName(names[0]);
+            setLastName(names.length > 1 ? names[1] : '');
+        }
+    }, [auth]);
 
     const handleSave = () => {
-        updateProfile(auth.currentUser, {
-            displayName: `${firstName} ${lastName}`,
-            email: email
-        }).then(() => {
-            navigate('/home'); // Navigate to the home page after profile update
-        }).catch((error) => {
-            console.error('Error updating profile: ', error);
-        });
+        const user = auth.currentUser;
+        if (user) {
+            updateProfile(user, {
+                displayName: `${firstName} ${lastName}`
+            }).then(() => {
+                navigate('/home'); // Navigate to the home page after profile update
+            }).catch((error) => {
+                console.error('Error updating profile: ', error);
+            });
+        } else {
+            console.error('No user is logged in.');
+        }
     };
 
     return (
@@ -41,17 +55,12 @@ function EditProfile() {
                     onChange={(e) => setLastName(e.target.value)}
                 />
             </div>
-            <div className="input-container">
-                <label>Email:</label>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
             <button onClick={handleSave}>Save Changes</button>
+            <button onClick={() => navigate('/home')}>Back</button>
         </div>
     );
 }
 
 export default EditProfile;
+
+
