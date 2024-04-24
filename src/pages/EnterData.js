@@ -1,21 +1,11 @@
+import { getAuth } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth } from "firebase/auth";
 import "./Styles/signin.css";
 
-const getUserUID = () => {
-  const auth = getAuth();
-  const user = auth.currentUser;
-  if (user) {
-    return user.uid;
-  } else {
-    // Handle the case where the user is not authenticated or the UID is not available
-    return null;
-  }
-};
-
 function EnterData() {
+  const auth = getAuth();
   const db = getFirestore();
   const navigate = useNavigate();
 
@@ -25,8 +15,14 @@ function EnterData() {
 
   const handleSave = async () => {
     try {
-      // Get the user's UID
-      const userUID = getUserUID();
+      // Ensure user is signed in
+      if (!auth.currentUser) {
+        console.error("No user is signed in.");
+        return;
+      }
+
+      // Get the signed-in user's UID
+      const userUID = auth.currentUser.uid;
 
       // Determine the collection based on the selected dataType
       let collectionName;
@@ -38,10 +34,10 @@ function EnterData() {
         collectionName = "calories-data";
       }
 
-      // Get a reference to the user's collection
+      // Get a reference to the signed-in user's collection
       const userCollectionRef = collection(db, "users", userUID, collectionName);
 
-      // Create a new document in the user's collection
+      // Create a new document in the signed-in user's collection
       const docRef = await addDoc(userCollectionRef, {
         dateTime: date,
         value: parseFloat(dataValue) // Convert dataValue to a number if needed
