@@ -17,11 +17,13 @@ const SetGoalsPage = () => {
   };
 
   return (
-    <div>
-      <h2>Set Goals</h2>
+    <div className="setgoals-page">
+      <div className="setgoals-container">
+      <div className="setgoals">
+      <h2><center>Set Goals</center></h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="stepsInput">Steps:</label>
+          <label htmlFor="stepsInput"><h3>Steps:</h3></label>
           <input
             type="number"
             id="stepsInput"
@@ -31,7 +33,7 @@ const SetGoalsPage = () => {
           />
         </div>
         <div>
-          <label htmlFor="caloriesToBurnInput">Calories to Burn:</label>
+          <label htmlFor="caloriesToBurnInput"><h3>Calories to Burn:</h3></label>
           <input
             type="number"
             id="caloriesToBurnInput"
@@ -51,6 +53,8 @@ const SetGoalsPage = () => {
         </ul>
       </div>
       <button onClick={() => navigate('/home')}>Back</button>
+      </div>
+      </div>
     </div>
   );
 };
