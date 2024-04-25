@@ -1,8 +1,8 @@
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState, useEffect } from "react";
-import firebaseConfig from "../backend/firebaseConfig";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { useNavigate, Link } from "react-router-dom";
+import firebaseConfig from "../backend/firebaseConfig";
 import "./Styles/signin.css";
 
 const Login = () => {
@@ -26,8 +26,7 @@ const Login = () => {
     const login = (e) => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                console.log(userCredential);
+            .then(() => {
                 navigate('/home');
             })
             .catch((error) => {
@@ -37,7 +36,7 @@ const Login = () => {
 
     return (
         <div className="sign-in">
-            <form onSubmit={login} id= "login-form">
+            <form onSubmit={login} id="login-form">
                 <h1>Log In to your Account</h1>
                 <input
                     type="email"
@@ -56,7 +55,6 @@ const Login = () => {
             <p>
                 Don't have an account? <br /> <Link to="/register">Register here</Link>
             </p>
-            
         </div>
     );
 };

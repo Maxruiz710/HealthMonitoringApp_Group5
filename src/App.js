@@ -30,7 +30,7 @@ function App() {
         <Route path="/changedata" element={<ChangeData />} />
         <Route path="/trends" element={<Trends />} />
         <Route path="/setgoals" element={<SetGoals />} />
-        <Route path="/" element={<BackendDemo />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
